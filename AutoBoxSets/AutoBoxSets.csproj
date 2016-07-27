@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: G:\Devel\git-src\Emby.combined\AutoBoxSets\AutoBoxSets.dll_1.1.0.1.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8180240B-592B-4680-BDD7-5575DBA727A3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>AutoBoxSets</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <ApplicationVersion>1.1.0.1</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>AutoBoxSets</RootNamespace>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test Release|AnyCPU'">
+    <OutputPath>bin\Test Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test Release|x64'">
+    <OutputPath>bin\x64\Test Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>packages\JetBrains.Annotations.10.1.5\lib\net\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Plugin.cs" />
+    <Compile Include="ServerEntryPoint.cs" />
+    <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Tasks\CreateBoxSetsTask.cs" />
+    <Compile Include="Shortcuts\IPersistFile.cs" />
+    <Compile Include="Shortcuts\IShellLinkA.cs" />
+    <Compile Include="Shortcuts\IShellLinkW.cs" />
+    <Compile Include="Shortcuts\ShellLink.cs" />
+    <Compile Include="Shortcuts\ShellShortcut.cs" />
+    <Compile Include="Shortcuts\SLGP_FLAGS.cs" />
+    <Compile Include="Shortcuts\SLR_FLAGS.cs" />
+    <Compile Include="Shortcuts\WIN32_FIND_DATAA.cs" />
+    <Compile Include="Shortcuts\WIN32_FIND_DATAW.cs" />
+    <Compile Include="Configuration\BoxSetConfigurationPage.cs" />
+    <Compile Include="Configuration\PluginConfiguration.cs" />
+    <Compile Include="Api\BoxSetsHandler.cs" />
+    <Compile Include="Api\RefreshRequest.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configuration\configPage.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Emby.codecleanup\MediaBrowser.Common\MediaBrowser.Common.csproj">
+      <Project>{9142eefa-7570-41e1-bfcc-468bb571af2f}</Project>
+      <Name>MediaBrowser.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Emby.codecleanup\MediaBrowser.Controller\MediaBrowser.Controller.csproj">
+      <Project>{17e1f4e6-8abd-4fe5-9ecf-43d4b6087ba2}</Project>
+      <Name>MediaBrowser.Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Emby.codecleanup\MediaBrowser.Model\MediaBrowser.Model.csproj">
+      <Project>{7eeeb4bb-f3e8-48fc-b4c5-70f0fff8329b}</Project>
+      <Name>MediaBrowser.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Emby.codecleanup\modules\CommonIO\CommonIO\CommonIO.csproj">
+      <Project>{a97ddd4c-50ba-4066-aeff-ab169c1f5745}</Project>
+      <Name>CommonIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Emby.codecleanup\modules\ServiceStack\src\ServiceStack.Interfaces\ServiceStack.Interfaces_cl.csproj">
+      <Project>{21265847-9d56-4268-bae5-5b8aec947bc9}</Project>
+      <Name>ServiceStack.Interfaces_cl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
