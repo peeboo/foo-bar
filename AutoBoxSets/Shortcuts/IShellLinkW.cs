@@ -7,6 +7,8 @@
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable IdentifierTypo
+
 namespace AutoBoxSets.Shortcuts
 {
 

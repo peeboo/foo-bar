@@ -148,7 +148,8 @@ namespace AutoBoxSets
         /// <returns>The <see cref="Task"/>.</returns>
         public async Task LoadRegistrationInfoAsync()
         {
-            Plugin.Registration = await this.PluginSecurityManager.GetRegistrationStatus(nameof(AutoBoxSets), null).ConfigureAwait(false);
+            Plugin.Registration =
+                await this.PluginSecurityManager.GetRegistrationStatus(nameof(AutoBoxSets), null).ConfigureAwait(false);
         }
 
 
@@ -189,7 +190,9 @@ namespace AutoBoxSets
                 return true;
             }
 
-            return Plugin.Instance.Configuration.BoxsetPaths.Contains(this.NormalizeBoxSetPath(path), StringComparer.OrdinalIgnoreCase);
+            return Plugin.Instance.Configuration.BoxsetPaths.Contains(
+                this.NormalizeBoxSetPath(path), 
+                StringComparer.OrdinalIgnoreCase);
         }
     }
 

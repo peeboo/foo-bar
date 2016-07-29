@@ -7,6 +7,8 @@
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable IdentifierTypo
+
 namespace AutoBoxSets.Shortcuts
 {
 
@@ -24,43 +26,43 @@ namespace AutoBoxSets.Shortcuts
     /// <summary>The shell shortcut.</summary>
     public class ShellShortcut : IDisposable
     {
-        /// <summary>The infotipsize.</summary>
-        private const int INFOTIPSIZE = 1024;
+        /// <summary>The infotip size.</summary>
+        private const int Infotipsize = 1024;
 
-        /// <summary>The ma x_ path.</summary>
-        private const int MAX_PATH = 260;
+        /// <summary>The max path.</summary>
+        private const int MaxPath = 260;
 
-        /// <summary>The s w_ showmaximized.</summary>
-        private const int SW_SHOWMAXIMIZED = 3;
+        /// <summary>The sw show maximized.</summary>
+        private const int SwShowmaximized = 3;
 
-        /// <summary>The s w_ showminimized.</summary>
-        private const int SW_SHOWMINIMIZED = 2;
+        /// <summary>The sw show minimized.</summary>
+        private const int SwShowminimized = 2;
 
-        /// <summary>The s w_ showminnoactive.</summary>
-        private const int SW_SHOWMINNOACTIVE = 7;
+        /// <summary>The sw show minno active.</summary>
+        private const int SwShowminnoactive = 7;
 
-        /// <summary>The s w_ shownormal.</summary>
-        private const int SW_SHOWNORMAL = 1;
+        /// <summary>The sw show normal.</summary>
+        private const int SwShownormal = 1;
 
-        /// <summary>The m_ link.</summary>
-        private IShellLinkA m_Link;
+        /// <summary>The ms path.</summary>
+        private readonly string mSPath;
 
-        /// <summary>The m_s path.</summary>
-        private string m_sPath;
+        /// <summary>The m link.</summary>
+        private IShellLinkA mLink;
 
 
         /// <summary>Initializes a new instance of the <see cref="ShellShortcut"/> class.</summary>
         /// <param name="linkPath">The link path.</param>
         public ShellShortcut(string linkPath)
         {
-            this.m_sPath = linkPath;
-            this.m_Link = (IShellLinkA)new ShellLink();
+            this.mSPath = linkPath;
+            this.mLink = (IShellLinkA)new ShellLink();
             if (!File.Exists(linkPath))
             {
                 return;
             }
 
-            ((IPersistFile)this.m_Link).Load(linkPath, 0);
+            ((IPersistFile)this.mLink).Load(linkPath, 0);
         }
 
 
@@ -70,14 +72,14 @@ namespace AutoBoxSets.Shortcuts
         {
             get
             {
-                var pszArgs = new StringBuilder(1024);
-                this.m_Link.GetArguments(pszArgs, pszArgs.Capacity);
+                var pszArgs = new StringBuilder(Infotipsize);
+                this.mLink.GetArguments(pszArgs, pszArgs.Capacity);
                 return pszArgs.ToString();
             }
 
             set
             {
-                this.m_Link.SetArguments(value);
+                this.mLink.SetArguments(value);
             }
         }
 
@@ -88,26 +90,26 @@ namespace AutoBoxSets.Shortcuts
         {
             get
             {
-                var pszName = new StringBuilder(1024);
-                this.m_Link.GetDescription(pszName, pszName.Capacity);
+                var pszName = new StringBuilder(Infotipsize);
+                this.mLink.GetDescription(pszName, pszName.Capacity);
                 return pszName.ToString();
             }
 
             set
             {
-                this.m_Link.SetDescription(value);
+                this.mLink.SetDescription(value);
             }
         }
 
 
         /// <summary>Gets or sets the hotkey.</summary>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">Hotkey must include a modifier key.</exception>
         public Keys Hotkey
         {
             get
             {
                 short pwHotkey;
-                this.m_Link.GetHotkey(out pwHotkey);
+                this.mLink.GetHotkey(out pwHotkey);
                 return (Keys)(((pwHotkey & 65280) << 8) | (pwHotkey & byte.MaxValue));
             }
 
@@ -118,7 +120,7 @@ namespace AutoBoxSets.Shortcuts
                     throw new ArgumentException("Hotkey must include a modifier key.");
                 }
 
-                this.m_Link.SetHotkey((short)((Keys)((int)(value & Keys.Modifiers) >> 8) | (value & Keys.KeyCode)));
+                this.mLink.SetHotkey((short)((Keys)((int)(value & Keys.Modifiers) >> 8) | (value & Keys.KeyCode)));
             }
         }
 
@@ -129,9 +131,9 @@ namespace AutoBoxSets.Shortcuts
         {
             get
             {
-                var pszIconPath = new StringBuilder(260);
+                var pszIconPath = new StringBuilder(MaxPath);
                 int piIcon;
-                this.m_Link.GetIconLocation(pszIconPath, pszIconPath.Capacity, out piIcon);
+                this.mLink.GetIconLocation(pszIconPath, pszIconPath.Capacity, out piIcon);
                 var icon1 = Native.ExtractIcon(Marshal.GetHINSTANCE(this.GetType().Module), pszIconPath.ToString(), piIcon);
                 if (icon1 == IntPtr.Zero)
                 {
@@ -152,15 +154,15 @@ namespace AutoBoxSets.Shortcuts
         {
             get
             {
-                var pszIconPath = new StringBuilder(260);
+                var pszIconPath = new StringBuilder(MaxPath);
                 int piIcon;
-                this.m_Link.GetIconLocation(pszIconPath, pszIconPath.Capacity, out piIcon);
+                this.mLink.GetIconLocation(pszIconPath, pszIconPath.Capacity, out piIcon);
                 return piIcon;
             }
 
             set
             {
-                this.m_Link.SetIconLocation(this.IconPath, value);
+                this.mLink.SetIconLocation(this.IconPath, value);
             }
         }
 
@@ -171,15 +173,15 @@ namespace AutoBoxSets.Shortcuts
         {
             get
             {
-                var pszIconPath = new StringBuilder(260);
+                var pszIconPath = new StringBuilder(MaxPath);
                 int piIcon;
-                this.m_Link.GetIconLocation(pszIconPath, pszIconPath.Capacity, out piIcon);
+                this.mLink.GetIconLocation(pszIconPath, pszIconPath.Capacity, out piIcon);
                 return pszIconPath.ToString();
             }
 
             set
             {
-                this.m_Link.SetIconLocation(value, this.IconIndex);
+                this.mLink.SetIconLocation(value, this.IconIndex);
             }
         }
 
@@ -191,42 +193,36 @@ namespace AutoBoxSets.Shortcuts
             get
             {
                 var pfd = new WIN32_FIND_DATAA();
-                var pszFile = new StringBuilder(260);
-                this.m_Link.GetPath(pszFile, pszFile.Capacity, out pfd, SLGP_FLAGS.SLGP_UNCPRIORITY);
+                var pszFile = new StringBuilder(MaxPath);
+                this.mLink.GetPath(pszFile, pszFile.Capacity, out pfd, SLGP_FLAGS.SLGP_UNCPRIORITY);
                 return pszFile.ToString();
             }
 
             set
             {
-                this.m_Link.SetPath(value);
+                this.mLink.SetPath(value);
             }
         }
 
 
         /// <summary>Gets the shell link.</summary>
-        public object ShellLink
-        {
-            get
-            {
-                return this.m_Link;
-            }
-        }
+        public object ShellLink => this.mLink;
 
 
         /// <summary>Gets or sets the window style.</summary>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">Unsupported ProcessWindowStyle value.</exception>
         public ProcessWindowStyle WindowStyle
         {
             get
             {
                 int piShowCmd;
-                this.m_Link.GetShowCmd(out piShowCmd);
+                this.mLink.GetShowCmd(out piShowCmd);
                 switch (piShowCmd)
                 {
-                    case 2:
-                    case 7:
+                    case SwShowminimized:
+                    case SwShowminnoactive:
                         return ProcessWindowStyle.Minimized;
-                    case 3:
+                    case SwShowmaximized:
                         return ProcessWindowStyle.Maximized;
                     default:
                         return ProcessWindowStyle.Normal;
@@ -239,19 +235,19 @@ namespace AutoBoxSets.Shortcuts
                 switch (value)
                 {
                     case ProcessWindowStyle.Normal:
-                        iShowCmd = 1;
+                        iShowCmd = SwShownormal;
                         break;
                     case ProcessWindowStyle.Minimized:
-                        iShowCmd = 7;
+                        iShowCmd = SwShowminnoactive;
                         break;
                     case ProcessWindowStyle.Maximized:
-                        iShowCmd = 3;
+                        iShowCmd = SwShowmaximized;
                         break;
                     default:
                         throw new ArgumentException("Unsupported ProcessWindowStyle value.");
                 }
 
-                this.m_Link.SetShowCmd(iShowCmd);
+                this.mLink.SetShowCmd(iShowCmd);
             }
         }
 
@@ -262,14 +258,14 @@ namespace AutoBoxSets.Shortcuts
         {
             get
             {
-                var pszDir = new StringBuilder(260);
-                this.m_Link.GetWorkingDirectory(pszDir, pszDir.Capacity);
+                var pszDir = new StringBuilder(MaxPath);
+                this.mLink.GetWorkingDirectory(pszDir, pszDir.Capacity);
                 return pszDir.ToString();
             }
 
             set
             {
-                this.m_Link.SetWorkingDirectory(value);
+                this.mLink.SetWorkingDirectory(value);
             }
         }
 
@@ -277,20 +273,20 @@ namespace AutoBoxSets.Shortcuts
         /// <summary>The dispose.</summary>
         public void Dispose()
         {
-            if (this.m_Link == null)
+            if (this.mLink == null)
             {
                 return;
             }
 
-            Marshal.ReleaseComObject(this.m_Link);
-            this.m_Link = null;
+            Marshal.ReleaseComObject(this.mLink);
+            this.mLink = null;
         }
 
 
         /// <summary>The save.</summary>
         public void Save()
         {
-            ((IPersistFile)this.m_Link).Save(this.m_sPath, true);
+            ((IPersistFile)this.mLink).Save(this.mSPath, true);
         }
 
 

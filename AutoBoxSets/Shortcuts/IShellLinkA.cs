@@ -7,6 +7,10 @@
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable IdentifierTypo
+// ReSharper disable CommentTypo
+
 namespace AutoBoxSets.Shortcuts
 {
 

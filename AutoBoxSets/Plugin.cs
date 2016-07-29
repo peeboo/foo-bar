@@ -169,7 +169,8 @@ namespace AutoBoxSets
                                 SearchInfo =
                                     new BoxSetInfo
                                         {
-                                            ProviderIds = new Dictionary<string, string> { { MetadataProviders.Tmdb.ToString(), collection.Key } }
+                                            ProviderIds =
+                                                new Dictionary<string, string> { { MetadataProviders.Tmdb.ToString(), collection.Key } }
                                         }
                             };
 
@@ -190,7 +191,10 @@ namespace AutoBoxSets
                                         {
                                             Name = result.Name,
                                             ProviderIds =
-                                                new Dictionary<string, string> { { MetadataProviders.Tmdb.ToString(), collection.Key } },
+                                                new Dictionary<string, string>
+                                                    {
+                                                        { MetadataProviders.Tmdb.ToString(), collection.Key }
+                                                    },
                                             ItemIdList = collection.Select(i => i.Id).ToList()
                                         }).ConfigureAwait(false);
 
@@ -245,7 +249,7 @@ namespace AutoBoxSets
                             try
                             {
                                 await
-                                    ServerEntryPoint.Instance.CollectionManager.AddToCollection(set.Id, new Guid[1] { member.Id })
+                                    ServerEntryPoint.Instance.CollectionManager.AddToCollection(set.Id, new[] { member.Id })
                                                     .ConfigureAwait(false);
 
                                 changed = true;
