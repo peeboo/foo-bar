@@ -1,10 +1,12 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
 // <copyright file="Extensions.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   The extensions.
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
+
 namespace AutoBoxSets.Utility
 {
 
@@ -24,7 +26,7 @@ namespace AutoBoxSets.Utility
         /// <typeparam name="TKey">TKey</typeparam>
         /// <returns>The <see cref="IEnumerable"/>.</returns>
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
-            this IEnumerable<TSource> source,
+            this IEnumerable<TSource> source, 
             [NotNull] Func<TSource, TKey> keySelector)
         {
             return source.DistinctBy(keySelector, null);
@@ -38,7 +40,7 @@ namespace AutoBoxSets.Utility
         /// <typeparam name="TSource">TSource</typeparam>
         /// <typeparam name="TKey">TKey</typeparam>
         /// <returns>The <see cref="IEnumerable"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
             [NotNull] this IEnumerable<TSource> source, 
             [NotNull] Func<TSource, TKey> keySelector, 

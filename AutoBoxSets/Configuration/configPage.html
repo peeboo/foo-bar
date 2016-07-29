@@ -4,7 +4,7 @@
     <title>Auto BoxSets</title>
 </head>
 <body>
-<div id="boxsetsConfigurationPage" data-role="page" class="page type-interior pluginConfigurationPage">
+<div class="page pluginConfigurationPage type-interior" data-role="page" id="boxsetsConfigurationPage">
 
     <div data-role="content">
         <div class="content-primary">
@@ -16,21 +16,21 @@
                         <label for="txtMinMembers">
                             Create BoxSets only if I have at least this many of its movies:
                         </label>
-                        <input type="number" min="1" id="txtMinMembers" name="txtMinMembers"/>
+                        <input id="txtMinMembers" min="1" name="txtMinMembers" type="number"/>
                     </li>
                     <li>
-                        <button type="submit" data-theme="b">Save</button>
-                        <button type="button" onclick="history.back();">Cancel</button>
+                        <button data-theme="b" type="submit">Save</button>
+                        <button onclick="history.back();" type="button">Cancel</button>
                     </li>
                     <li>
-                        <p style="white-space: normal; font-size: 12px">
+                        <p style="font-size: 12px; white-space: normal;">
                             Auto Box Sets will keep itself up to date whenever you add or remove movies from your library. However, some changes like modifications
                             to the tmdb collection ids may not be seen. In those instances, you can manually force a refresh with this button.
                         </p>
 
                     </li>
                     <li>
-                        <button type="button" onclick="BoxSetsConfigurationPage.refreshBoxSets();">Refresh Box Sets</button>
+                        <button onclick="BoxSetsConfigurationPage.refreshBoxSets();" type="button">Refresh Box Sets</button>
 
                     </li>
                 </ul>

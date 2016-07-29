@@ -1,14 +1,12 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
 // <copyright file="IPersistFile.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   The PersistFile interface.
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable InconsistentNaming
-// ReSharper disable IdentifierTypo
-// ReSharper disable CommentTypo
 namespace AutoBoxSets.Shortcuts
 {
 

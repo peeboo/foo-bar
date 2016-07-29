@@ -1,10 +1,12 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
 // <copyright file="BoxSetConfigurationPage.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   The box set configuration page.
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
+
 namespace AutoBoxSets.Configuration
 {
 

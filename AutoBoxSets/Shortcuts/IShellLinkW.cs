@@ -1,14 +1,12 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
 // <copyright file="IShellLinkW.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   The ShellLinkW interface.
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CommentTypo
-// ReSharper disable IdentifierTypo
-// ReSharper disable InconsistentNaming
 namespace AutoBoxSets.Shortcuts
 {
 

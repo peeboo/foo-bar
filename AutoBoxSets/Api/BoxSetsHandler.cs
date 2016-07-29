@@ -1,10 +1,12 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
-// <copyright file="BoxSetsHandler.cs" company="emby">
-//   2016
+// <copyright file="BoxSetsHandler.cs" company="">
+//   
 // </copyright>
 // <summary>
+//   The box sets handler.
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
+
 namespace AutoBoxSets.Api
 {
 

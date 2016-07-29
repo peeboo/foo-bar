@@ -36,11 +36,11 @@ namespace AutoBoxSets
     [UsedImplicitly]
     public class ServerEntryPoint : IServerEntryPoint, IDisposable, IRequiresRegistration
     {
-        /// <summary>The _timer lock.</summary>
-        private readonly object _timerLock = new object();
+        /// <summary>The timer lock.</summary>
+        private readonly object timerLock = new object();
 
-        /// <summary>The _update timer.</summary>
-        private Timer _updateTimer;
+        /// <summary>The update timer.</summary>
+        private Timer updateTimer;
 
 
         /// <summary>Initializes a new instance of the <see cref="ServerEntryPoint"/> class. </summary>
@@ -54,15 +54,15 @@ namespace AutoBoxSets
         /// <param name="collectionManager">The collection Manager.</param>
         /// <param name="applicationPaths">The application Paths.</param>
         public ServerEntryPoint(
-            ITaskManager taskManager, 
-            ILibraryManager libraryManager, 
-            IFileSystem fileSystem, 
-            IProviderManager providerManager, 
+            [NotNull] ITaskManager taskManager, 
+            [NotNull] ILibraryManager libraryManager, 
+            [NotNull] IFileSystem fileSystem, 
+            [NotNull] IProviderManager providerManager, 
             [NotNull] ILogManager logManager, 
-            ISecurityManager securityManager, 
-            ILibraryMonitor libraryMonitor, 
-            ICollectionManager collectionManager, 
-            IApplicationPaths applicationPaths)
+            [NotNull] ISecurityManager securityManager, 
+            [NotNull] ILibraryMonitor libraryMonitor, 
+            [NotNull] ICollectionManager collectionManager, 
+            [NotNull] IApplicationPaths applicationPaths)
         {
             this.TaskManager = taskManager;
             this.LibraryManager = libraryManager;
@@ -122,6 +122,9 @@ namespace AutoBoxSets
         /// <param name="newConfig">The new config.</param>
         /// <exception cref="OperationCanceledException">The token has had cancellation requested.</exception>
         /// <returns>The <see cref="Task"/>.</returns>
+        /// <exception cref="ObjectDisposedException">The associated <see cref="System.Threading.CancellationTokenSource"/> has
+        ///     been disposed.</exception>
+        /// <exception cref="InvalidCastException">An element in the sequence cannot be cast to type TResult.</exception>
         public static async Task OnConfigurationUpdatedAsync(
             [NotNull] PluginConfiguration oldConfig, 
             [NotNull] PluginConfiguration newConfig)
@@ -145,7 +148,7 @@ namespace AutoBoxSets
         /// <returns>The <see cref="Task"/>.</returns>
         public async Task LoadRegistrationInfoAsync()
         {
-            Plugin.Registration = await this.PluginSecurityManager.GetRegistrationStatus("AutoBoxSets", null).ConfigureAwait(false);
+            Plugin.Registration = await this.PluginSecurityManager.GetRegistrationStatus(nameof(AutoBoxSets), null).ConfigureAwait(false);
         }
 
 
@@ -160,6 +163,11 @@ namespace AutoBoxSets
 
         /// <summary>The run.</summary>
         /// <exception cref="OperationCanceledException">The token has had cancellation requested.</exception>
+        /// <exception cref="InvalidCastException">An element in the sequence cannot be cast to type TResult.</exception>
+        /// <exception cref="ObjectDisposedException">
+        ///     The associated <see cref="System.Threading.CancellationTokenSource"/> has
+        ///     been disposed.
+        /// </exception>
         public void Run()
         {
             if (!Plugin.Instance.Configuration.NeedsUpdate)

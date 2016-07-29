@@ -1,5 +1,6 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   AssemblyInfo.cs
@@ -22,4 +23,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("AutoBoxSets")]
 [assembly: AssemblyVersion("1.1.0.1")]
 [assembly: AssemblyFileVersion("1.1.0.1")]
-

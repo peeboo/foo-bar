@@ -1,15 +1,12 @@
 ﻿// ------------------------------------------------------------------------------------------------------------------------
 // <copyright file="ShellShortcut.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   The shell shortcut.
 // </summary>
 // ------------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CommentTypo
-// ReSharper disable InconsistentNaming
-// ReSharper disable UnusedMember.Local
-// ReSharper disable IdentifierTypo
 namespace AutoBoxSets.Shortcuts
 {
 

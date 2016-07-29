@@ -36,7 +36,6 @@ namespace AutoBoxSets
 
 
     /// <summary>The plugin.</summary>
-    [UsedImplicitly]
     public class Plugin : BasePlugin<PluginConfiguration>
     {
         /// <summary>The box set tag.</summary>
@@ -45,26 +44,31 @@ namespace AutoBoxSets
         /// <summary>The scan task running.</summary>
         public static bool ScanTaskRunning;
 
-        /// <summary>The _library manager.</summary>
-        private readonly ILibraryManager _libraryManager;
+        /// <summary>The library manager.</summary>
+        [NotNull]
+        private readonly ILibraryManager libraryManager;
 
-        /// <summary>The _scan lock.</summary>
-        private readonly object _scanLock = new object();
+        /// <summary>The scan lock.</summary>
+        private readonly object scanLock = new object();
 
 
         /// <summary>Initializes a new instance of the <see cref="Plugin"/> class.</summary>
         /// <param name="applicationPaths">The application paths.</param>
         /// <param name="xmlSerializer">The xml serializer.</param>
         /// <param name="libraryManager">The library manager.</param>
-        public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer, ILibraryManager libraryManager)
+        public Plugin(
+            [NotNull] IApplicationPaths applicationPaths,
+            [NotNull] IXmlSerializer xmlSerializer,
+            [NotNull] ILibraryManager libraryManager)
             : base(applicationPaths, xmlSerializer)
         {
-            this._libraryManager = libraryManager;
+            this.libraryManager = libraryManager;
             Instance = this;
         }
 
 
         /// <summary>Gets the instance.</summary>
+        [NotNull]
         public static Plugin Instance { get; private set; }
 
 
@@ -91,9 +95,14 @@ namespace AutoBoxSets
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="Task"/>.</returns>
         /// <exception cref="OperationCanceledException">The token has had cancellation requested.</exception>
+        /// <exception cref="ObjectDisposedException">
+        ///     The associated <see cref="System.Threading.CancellationTokenSource"/> has
+        ///     been disposed.
+        /// </exception>
+        /// <exception cref="InvalidCastException">An element in the sequence cannot be cast to type TResult.</exception>
         public async Task CreateAllBoxSetsAsync(IProgress<double> progress, CancellationToken cancellationToken)
         {
-            lock (this._scanLock)
+            lock (this.scanLock)
             {
                 if (ScanTaskRunning)
                 {
@@ -130,7 +139,7 @@ namespace AutoBoxSets
         /// <summary>The update box set.</summary>
         /// <param name="collection">The collection.</param>
         /// <returns>The <see cref="Task"/>.</returns>
-        /// <exception cref="InvalidCastException">An element in the sequence cannot be cast to type <paramref name="TResult"/>.</exception>
+        /// <exception cref="InvalidCastException">An element in the sequence cannot be cast to type TResult.</exception>
         public async Task<bool> UpdateBoxSetAsync([NotNull] IGrouping<string, BaseItem> collection)
         {
             var realCount = collection.DistinctBy(i => i.GetProviderId(MetadataProviders.Tmdb)).Count();
@@ -268,17 +277,27 @@ namespace AutoBoxSets
         /// <summary>The update configuration.</summary>
         /// <param name="configuration">The configuration.</param>
         /// <exception cref="OperationCanceledException">The token has had cancellation requested.</exception>
-        /// <exception cref="AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> exception contains an <see cref="T:System.OperationCanceledException" /> exception in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.-or-An exception was thrown during the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances. </exception>
+        /// <exception cref="AggregateException">
+        ///     At least one of the <see cref="System.Threading.Tasks.Task"/> instances was
+        ///     canceled. If a task was canceled, the <see cref="T:System.AggregateException"/> exception contains an
+        ///     <see cref="System.OperationCanceledException"/> exception in its
+        ///     <see cref="System.AggregateException.InnerExceptions"/> collection.-or- An exception was thrown during the
+        ///     execution of at least one of the <see cref="System.Threading.Tasks.Task"/> instances.
+        /// </exception>
+        /// <exception cref="ObjectDisposedException">
+        ///     One or more of the <see cref="System.Threading.Tasks.Task"/> objects in tasks
+        ///     has been disposed.
+        /// </exception>
         public override void UpdateConfiguration([NotNull] BasePluginConfiguration configuration)
         {
-            var configuration1 = this.Configuration;
             base.UpdateConfiguration(configuration);
 
             var task =
                 Task.Factory.StartNew(
                     async () =>
                     await
-                    ServerEntryPoint.OnConfigurationUpdatedAsync(configuration1, (PluginConfiguration)configuration).ConfigureAwait(false));
+                    ServerEntryPoint.OnConfigurationUpdatedAsync(this.Configuration, (PluginConfiguration)configuration)
+                                    .ConfigureAwait(false));
 
             Task.WaitAll(task);
         }
@@ -289,7 +308,7 @@ namespace AutoBoxSets
         /// <returns>The <see cref="IEnumerable"/>.</returns>
         private IEnumerable<BaseItem> GetAllItems([NotNull] Type type)
         {
-            return this._libraryManager.GetItemList(new InternalItemsQuery { IncludeItemTypes = new[] { type.Name } });
+            return this.libraryManager.GetItemList(new InternalItemsQuery { IncludeItemTypes = new[] { type.Name } });
         }
     }
 
